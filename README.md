@@ -18,6 +18,7 @@ If a newly installed Node.js terminal has not been restarted yet, use **Terminal
 - Pre-market, market open, and market close reminders
 - On-device scheduling (up to 60 pending notifications) expressed in U.S. Eastern Time
 - Weekend and major NYSE-holiday exclusion
+- Stock-scanner screen with price, percent-move, and volume filters
 
 Notifications need to be refreshed by opening the app periodically; the number of days scheduled adjusts to stay within iPhone notification limits. Before App Store submission, test all notification behavior on a physical iPhone.
 
@@ -29,3 +30,8 @@ Notifications need to be refreshed by opening the app periodically; the number o
 - `notificationService.ts` — notification permission and scheduling logic
 - `marketCalendar.ts` and `marketStatus.ts` — market dates, holidays, and open/closed status
 - `time.ts` and `types.ts` — shared helpers and TypeScript types
+- `ScannerScreen.tsx` and `stockService.ts` — scanner UI and optional Alpha Vantage market data
+
+## Optional market data
+
+The scanner runs with clearly labeled demo data by default. To use Alpha Vantage's end-of-day top movers, copy `.env.example` to `.env`, add your API key, and restart Expo. Never commit `.env`.

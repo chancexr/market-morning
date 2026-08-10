@@ -6,6 +6,7 @@ import { styles } from './styles';
 import { colors } from './theme';
 import { minutesToTime } from './time';
 import type { MarketReminder } from './types';
+import { ScannerScreen } from './ScannerScreen';
 
 const DEFAULT_WAKE_MINUTES = 7 * 60;
 const TIME_ADJUSTMENT_MINUTES = 15;
@@ -17,6 +18,7 @@ const defaultReminders: MarketReminder[] = [
 ];
 
 export default function App() {
+  const [activeTab, setActiveTab] = useState<'morning' | 'scanner'>('morning');
   const [wakeMinutes, setWakeMinutes] = useState(DEFAULT_WAKE_MINUTES);
   const [wakeEnabled, setWakeEnabled] = useState(true);
   const [reminders, setReminders] = useState(defaultReminders);
@@ -45,7 +47,15 @@ export default function App() {
   return (
     <SafeAreaView style={styles.screen}>
       <StatusBar barStyle="light-content" />
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={styles.tabBar}>
+        <Pressable onPress={() => setActiveTab('morning')} style={[styles.tab, activeTab === 'morning' && styles.tabActive]}>
+          <Text style={[styles.tabText, activeTab === 'morning' && styles.tabTextActive]}>Morning</Text>
+        </Pressable>
+        <Pressable onPress={() => setActiveTab('scanner')} style={[styles.tab, activeTab === 'scanner' && styles.tabActive]}>
+          <Text style={[styles.tabText, activeTab === 'scanner' && styles.tabTextActive]}>Scanner</Text>
+        </Pressable>
+      </View>
+      {activeTab === 'scanner' ? <ScannerScreen /> : <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Text style={styles.eyebrow}>MARKET MORNING</Text>
           <Text style={styles.title}>Wake up ready.</Text>
@@ -104,7 +114,7 @@ export default function App() {
         <Pressable style={styles.saveButton} onPress={saveSchedule}>
           <Text style={styles.saveText}>Save my schedule</Text>
         </Pressable>
-      </ScrollView>
+      </ScrollView>}
     </SafeAreaView>
   );
 }

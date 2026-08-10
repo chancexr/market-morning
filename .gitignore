@@ -5,3 +5,4 @@ dist/
 .env
 .tools/
 expo-qr.png
+expo-qr-current.png

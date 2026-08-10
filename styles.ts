@@ -4,6 +4,11 @@ import { colors, layout } from './theme';
 export const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   content: { padding: layout.screenPadding, paddingBottom: 42 },
+  tabBar: { flexDirection: 'row', backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: 16, padding: 4, marginHorizontal: layout.screenPadding, marginTop: 10 },
+  tab: { flex: 1, alignItems: 'center', paddingVertical: 10, borderRadius: 12 },
+  tabActive: { backgroundColor: colors.brand },
+  tabText: { color: colors.textMuted, fontSize: 13, fontWeight: '800' },
+  tabTextActive: { color: colors.textOnBrand },
   header: { paddingTop: 22, marginBottom: 28 },
   eyebrow: { color: colors.brand, fontWeight: '800', fontSize: 12, letterSpacing: 1.6 },
   title: { color: colors.text, fontSize: 38, fontWeight: '800', letterSpacing: -1, marginTop: 7 },
