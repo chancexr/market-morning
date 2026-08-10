@@ -20,3 +20,12 @@ If a newly installed Node.js terminal has not been restarted yet, use **Terminal
 - Weekend and major NYSE-holiday exclusion
 
 Notifications need to be refreshed by opening the app periodically; the number of days scheduled adjusts to stay within iPhone notification limits. Before App Store submission, test all notification behavior on a physical iPhone.
+
+## Code layout
+
+- `App.tsx` — the screen and user interactions
+- `theme.ts` — global colors and spacing; start here for visual changes
+- `styles.ts` — reusable screen styles
+- `notificationService.ts` — notification permission and scheduling logic
+- `marketCalendar.ts` and `marketStatus.ts` — market dates, holidays, and open/closed status
+- `time.ts` and `types.ts` — shared helpers and TypeScript types

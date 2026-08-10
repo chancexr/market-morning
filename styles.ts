@@ -1,0 +1,32 @@
+import { StyleSheet } from 'react-native';
+import { colors, layout } from './theme';
+
+export const styles = StyleSheet.create({
+  screen: { flex: 1, backgroundColor: colors.background },
+  content: { padding: layout.screenPadding, paddingBottom: 42 },
+  header: { paddingTop: 22, marginBottom: 28 },
+  eyebrow: { color: colors.brand, fontWeight: '800', fontSize: 12, letterSpacing: 1.6 },
+  title: { color: colors.text, fontSize: 38, fontWeight: '800', letterSpacing: -1, marginTop: 7 },
+  statusPill: { alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', backgroundColor: colors.surfaceElevated, borderRadius: 99, paddingHorizontal: 12, paddingVertical: 8, marginTop: 18 },
+  statusDot: { height: 8, width: 8, borderRadius: 4, backgroundColor: colors.brand, marginRight: 8 },
+  statusText: { color: colors.textSecondary, fontSize: 13, fontWeight: '600' },
+  card: { backgroundColor: colors.surface, borderColor: colors.border, borderWidth: 1, borderRadius: layout.cardRadius, padding: 18 },
+  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  cardLabel: { color: colors.text, fontSize: 13, fontWeight: '800', letterSpacing: 1 },
+  helper: { color: colors.textMuted, fontSize: 13, marginTop: 4 },
+  timeControl: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 23 },
+  time: { color: colors.text, fontSize: 36, fontWeight: '800', letterSpacing: -1.2 },
+  timeButton: { alignItems: 'center', justifyContent: 'center', backgroundColor: colors.surfacePressed, width: 44, height: 44, borderRadius: 22 },
+  timeButtonText: { color: colors.brand, fontSize: 27, fontWeight: '500', marginTop: -3 },
+  timeHint: { color: colors.textSubtle, textAlign: 'center', fontSize: 12, marginTop: 12 },
+  sectionTitle: { color: colors.textMuted, fontSize: 12, fontWeight: '800', letterSpacing: 1.2, marginTop: 30, marginBottom: 10 },
+  reminder: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 10 },
+  divider: { borderTopColor: colors.border, borderTopWidth: 1, marginTop: 9, paddingTop: 19 },
+  reminderLabel: { color: colors.text, fontSize: 16, fontWeight: '700' },
+  reminderTime: { color: colors.textMuted, fontSize: 13, marginTop: 4 },
+  note: { backgroundColor: colors.successSurface, borderRadius: layout.buttonRadius, padding: 16, marginTop: 20 },
+  noteTitle: { color: colors.successText, fontSize: 14, fontWeight: '800' },
+  noteText: { color: colors.successTextMuted, fontSize: 13, lineHeight: 19, marginTop: 4 },
+  saveButton: { backgroundColor: colors.brand, borderRadius: layout.buttonRadius, paddingVertical: 18, alignItems: 'center', marginTop: 22 },
+  saveText: { color: colors.textOnBrand, fontSize: 16, fontWeight: '800' },
+});
