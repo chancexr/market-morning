@@ -3,23 +3,23 @@
  * Colors use six-digit hex values: #RRGGBB.
  */
 export const colors = {
-  background: '#0B0E16',
-  surface: '#141925',
-  surfaceElevated: '#172031',
-  surfacePressed: '#20293A',
-  border: '#232B3B',
-  switchOff: '#303647',
-  brand: '#e663e2',
-  brandSoft: '#F3B5EF',
-  brandDark: '#2C102B',
+  background: '#100E1A',
+  surface: '#1A1627',
+  surfaceElevated: '#241D36',
+  surfacePressed: '#30264A',
+  border: '#3B3156',
+  switchOff: '#47405B',
+  brand: '#A78BFA',
+  brandSoft: '#DDD6FE',
+  brandDark: '#251A42',
   text: '#F8FAFC',
   textSecondary: '#CBD5E1',
   textMuted: '#8994A8',
   textSubtle: '#67738A',
-  textOnBrand: '#250A23',
-  successSurface: '#112C2B',
-  successText: '#A7F3D0',
-  successTextMuted: '#C7E8DD',
+  textOnBrand: '#1A1032',
+  successSurface: '#211A36',
+  successText: '#DDD6FE',
+  successTextMuted: '#C9C0E8',
 } as const;
 
 export const layout = {

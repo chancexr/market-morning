@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Alert, Pressable, SafeAreaView, ScrollView, StatusBar, Switch, Text, View } from 'react-native';
-import { getMarketStatus } from './marketStatus';
+import { getMarketStatus, getNextMarketEvent } from './marketStatus';
 import { saveNotificationSchedule } from './notificationService';
 import { styles } from './styles';
 import { colors } from './theme';
@@ -21,6 +21,7 @@ export default function App() {
   const [wakeEnabled, setWakeEnabled] = useState(true);
   const [reminders, setReminders] = useState(defaultReminders);
   const marketStatus = useMemo(() => getMarketStatus(), []);
+  const nextMarketEvent = useMemo(() => getNextMarketEvent(), []);
 
   const updateWakeTime = (delta: number) => {
     setWakeMinutes((current) => (current + delta + 24 * 60) % (24 * 60));
@@ -52,6 +53,15 @@ export default function App() {
             <View style={styles.statusDot} />
             <Text style={styles.statusText}>{marketStatus}</Text>
           </View>
+        </View>
+
+        <View style={styles.nextCard}>
+          <Text style={styles.nextLabel}>{nextMarketEvent.label}</Text>
+          <View style={styles.nextRow}>
+            <Text style={styles.nextTitle}>{nextMarketEvent.title}</Text>
+            <Text style={styles.nextTime}>{nextMarketEvent.time}</Text>
+          </View>
+          <Text style={styles.nextDetail}>{nextMarketEvent.detail}</Text>
         </View>
 
         <View style={styles.card}>
