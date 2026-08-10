@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "Market Morning",
+    "slug": "market-morning",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.marketmorning.app"
+    },
+    "android": {
+      "package": "com.marketmorning.app"
+    },
+    "plugins": ["expo-notifications"]
+  }
+}

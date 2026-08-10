@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Market Morning",
+      "type": "shell",
+      "command": "& 'C:\\Users\\DeadA\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin\\node.exe' node_modules\\expo\\bin\\cli start",
+      "options": {
+        "env": {
+          "EXPO_NO_TELEMETRY": "1"
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}
