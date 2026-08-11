@@ -3,6 +3,7 @@ import * as Notifications from 'expo-notifications';
 import { easternTimeOnDate, getNextTradingDays } from './marketCalendar';
 import { timeStringTo24Hour } from './time';
 import type { MarketReminder } from './types';
+import { soundChannelId, type AlarmSound } from './alarmSettings';
 
 const MAX_PENDING_NOTIFICATIONS = 60;
 
@@ -15,13 +16,22 @@ Notifications.setNotificationHandler({
   }),
 });
 
-async function scheduleNotification(date: Date, hour: number, minute: number, title: string, body: string) {
+async function ensureAndroidChannel(sound: AlarmSound) {
+  if (Platform.OS !== 'android') return;
+  await Notifications.setNotificationChannelAsync(soundChannelId(sound), {
+    name: `Market Morning — ${sound === 'default' ? 'Default' : sound.replace('.wav', '')}`,
+    importance: Notifications.AndroidImportance.MAX,
+    sound,
+  });
+}
+
+async function scheduleNotification(date: Date, hour: number, minute: number, title: string, body: string, sound: AlarmSound) {
   const triggerDate = easternTimeOnDate(date, hour, minute);
   if (triggerDate <= new Date()) return;
 
   await Notifications.scheduleNotificationAsync({
-    content: { title, body, sound: 'default' },
-    trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: triggerDate },
+    content: { title, body, sound },
+    trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: triggerDate, channelId: soundChannelId(sound) },
   });
 }
 
@@ -29,17 +39,12 @@ export async function saveNotificationSchedule(
   wakeEnabled: boolean,
   wakeMinutes: number,
   reminders: MarketReminder[],
+  sound: AlarmSound,
 ) {
   const permission = await Notifications.requestPermissionsAsync();
   if (!permission.granted) return false;
 
-  if (Platform.OS === 'android') {
-    await Notifications.setNotificationChannelAsync('market-morning', {
-      name: 'Market Morning alarms',
-      importance: Notifications.AndroidImportance.MAX,
-      sound: 'default',
-    });
-  }
+  await ensureAndroidChannel(sound);
 
   await Notifications.cancelAllScheduledNotificationsAsync();
   const enabledReminders = reminders.filter((reminder) => reminder.enabled);
@@ -57,14 +62,26 @@ export async function saveNotificationSchedule(
         wakeMinutes % 60,
         'Good morning',
         'Your day starts now. The market opens at 9:30 AM ET.',
+        sound,
       );
     }
 
     for (const reminder of enabledReminders) {
       const { hour, minute } = timeStringTo24Hour(reminder.time);
-      await scheduleNotification(tradingDay, hour, minute, reminder.label, `${reminder.label} starts now.`);
+      await scheduleNotification(tradingDay, hour, minute, reminder.label, `${reminder.label} starts now.`, sound);
     }
   }
 
   return upcomingTradingDays.length;
+}
+
+export async function testAlarmSound(sound: AlarmSound) {
+  const permission = await Notifications.requestPermissionsAsync();
+  if (!permission.granted || permission.ios?.allowsSound === false) return false;
+  await ensureAndroidChannel(sound);
+  await Notifications.scheduleNotificationAsync({
+    content: { title: 'Market Morning sound test', body: 'Your alarm sound is working.', sound },
+    trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 2, channelId: soundChannelId(sound) },
+  });
+  return true;
 }

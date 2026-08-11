@@ -12,6 +12,16 @@
     "android": {
       "package": "com.marketmorning.app"
     },
-    "plugins": ["expo-notifications"]
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "sounds": [
+            "./assets/sounds/market-bell.wav",
+            "./assets/sounds/gentle-chime.wav"
+          ]
+        }
+      ]
+    ]
   }
 }

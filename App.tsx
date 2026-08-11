@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Alert, Pressable, SafeAreaView, ScrollView, StatusBar, Switch, Text, View } from 'react-native';
 import { getMarketStatus, getNextMarketEvent } from './marketStatus';
 import { saveNotificationSchedule } from './notificationService';
@@ -7,6 +7,8 @@ import { colors } from './theme';
 import { minutesToTime } from './time';
 import type { MarketReminder } from './types';
 import { ScannerScreen } from './ScannerScreen';
+import { SettingsScreen } from './SettingsScreen';
+import { loadAlarmSound, type AlarmSound } from './alarmSettings';
 
 const DEFAULT_WAKE_MINUTES = 7 * 60;
 const TIME_ADJUSTMENT_MINUTES = 15;
@@ -18,12 +20,15 @@ const defaultReminders: MarketReminder[] = [
 ];
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'morning' | 'scanner'>('morning');
+  const [activeTab, setActiveTab] = useState<'morning' | 'scanner' | 'settings'>('morning');
+  const [alarmSound, setAlarmSound] = useState<AlarmSound>('default');
   const [wakeMinutes, setWakeMinutes] = useState(DEFAULT_WAKE_MINUTES);
   const [wakeEnabled, setWakeEnabled] = useState(true);
   const [reminders, setReminders] = useState(defaultReminders);
   const marketStatus = useMemo(() => getMarketStatus(), []);
   const nextMarketEvent = useMemo(() => getNextMarketEvent(), []);
+
+  useEffect(() => { void loadAlarmSound().then(setAlarmSound); }, []);
 
   const updateWakeTime = (delta: number) => {
     setWakeMinutes((current) => (current + delta + 24 * 60) % (24 * 60));
@@ -36,7 +41,7 @@ export default function App() {
   };
 
   const saveSchedule = async () => {
-    const scheduledDays = await saveNotificationSchedule(wakeEnabled, wakeMinutes, reminders);
+    const scheduledDays = await saveNotificationSchedule(wakeEnabled, wakeMinutes, reminders, alarmSound);
     if (!scheduledDays) {
       Alert.alert('Notifications are off', 'Allow notifications in Settings so Market Morning can alert you.');
       return;
@@ -54,8 +59,11 @@ export default function App() {
         <Pressable onPress={() => setActiveTab('scanner')} style={[styles.tab, activeTab === 'scanner' && styles.tabActive]}>
           <Text style={[styles.tabText, activeTab === 'scanner' && styles.tabTextActive]}>Scanner</Text>
         </Pressable>
+        <Pressable onPress={() => setActiveTab('settings')} style={[styles.tab, activeTab === 'settings' && styles.tabActive]}>
+          <Text style={[styles.tabText, activeTab === 'settings' && styles.tabTextActive]}>Settings</Text>
+        </Pressable>
       </View>
-      {activeTab === 'scanner' ? <ScannerScreen /> : <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      {activeTab === 'scanner' ? <ScannerScreen /> : activeTab === 'settings' ? <SettingsScreen sound={alarmSound} onSoundChange={setAlarmSound} /> : <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Text style={styles.eyebrow}>MARKET MORNING</Text>
           <Text style={styles.title}>Wake up ready.</Text>
