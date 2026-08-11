@@ -19,7 +19,7 @@ If a newly installed Node.js terminal has not been restarted yet, use **Terminal
 - On-device scheduling (up to 60 pending notifications) expressed in U.S. Eastern Time
 - Weekend and major NYSE-holiday exclusion
 - Stock-scanner screen with price, percent-move, and volume filters
-- Persistent alarm-sound settings and a two-second test notification
+- Persistent alarm-sound settings, instant previews, and an optional notification test
 
 Notifications need to be refreshed by opening the app periodically; the number of days scheduled adjusts to stay within iPhone notification limits. Before App Store submission, test all notification behavior on a physical iPhone.
 
