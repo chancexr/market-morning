@@ -81,7 +81,7 @@ export async function testAlarmSound(sound: AlarmSound) {
   await ensureAndroidChannel(sound);
   await Notifications.scheduleNotificationAsync({
     content: { title: 'Market Morning sound test', body: 'Your alarm sound is working.', sound },
-    trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 2, channelId: soundChannelId(sound) },
+    trigger: { type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL, seconds: 7, channelId: soundChannelId(sound) },
   });
   return true;
 }

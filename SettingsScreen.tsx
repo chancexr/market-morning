@@ -32,7 +32,7 @@ export function SettingsScreen({ sound, onSoundChange }: { sound: AlarmSound; on
       Alert.alert('Sound permission is off', 'Enable Sounds for Market Morning in your phone notification settings.');
       return;
     }
-    Alert.alert('Notification scheduled', 'Lock your phone or leave the app. It will arrive in two seconds.');
+    Alert.alert('Notification scheduled', 'Lock your phone or leave the app. It will arrive in seven seconds.');
   };
 
   return (
