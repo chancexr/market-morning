@@ -9,6 +9,7 @@ import type { MarketReminder } from './types';
 import { ScannerScreen } from './ScannerScreen';
 import { SettingsScreen } from './SettingsScreen';
 import { loadAlarmSound, type AlarmSound } from './alarmSettings';
+import { PortfolioScreen } from './PortfolioScreen';
 
 const DEFAULT_WAKE_MINUTES = 7 * 60;
 const TIME_ADJUSTMENT_MINUTES = 15;
@@ -20,7 +21,7 @@ const defaultReminders: MarketReminder[] = [
 ];
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'morning' | 'scanner' | 'settings'>('morning');
+  const [activeTab, setActiveTab] = useState<'morning' | 'portfolio' | 'scanner' | 'settings'>('morning');
   const [alarmSound, setAlarmSound] = useState<AlarmSound>('default');
   const [wakeMinutes, setWakeMinutes] = useState(DEFAULT_WAKE_MINUTES);
   const [wakeEnabled, setWakeEnabled] = useState(true);
@@ -59,11 +60,14 @@ export default function App() {
         <Pressable onPress={() => setActiveTab('scanner')} style={[styles.tab, activeTab === 'scanner' && styles.tabActive]}>
           <Text style={[styles.tabText, activeTab === 'scanner' && styles.tabTextActive]}>Scanner</Text>
         </Pressable>
+        <Pressable onPress={() => setActiveTab('portfolio')} style={[styles.tab, activeTab === 'portfolio' && styles.tabActive]}>
+          <Text style={[styles.tabText, activeTab === 'portfolio' && styles.tabTextActive]}>Portfolio</Text>
+        </Pressable>
         <Pressable onPress={() => setActiveTab('settings')} style={[styles.tab, activeTab === 'settings' && styles.tabActive]}>
           <Text style={[styles.tabText, activeTab === 'settings' && styles.tabTextActive]}>Settings</Text>
         </Pressable>
       </View>
-      {activeTab === 'scanner' ? <ScannerScreen /> : activeTab === 'settings' ? <SettingsScreen sound={alarmSound} onSoundChange={setAlarmSound} /> : <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      {activeTab === 'scanner' ? <ScannerScreen /> : activeTab === 'portfolio' ? <PortfolioScreen /> : activeTab === 'settings' ? <SettingsScreen sound={alarmSound} onSoundChange={setAlarmSound} /> : <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Text style={styles.eyebrow}>MARKET MORNING</Text>
           <Text style={styles.title}>Wake up ready.</Text>

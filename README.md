@@ -20,6 +20,7 @@ If a newly installed Node.js terminal has not been restarted yet, use **Terminal
 - Weekend and major NYSE-holiday exclusion
 - Stock-scanner screen with price, percent-move, and volume filters
 - Persistent alarm-sound settings, instant previews, and an optional notification test
+- Local portfolio tracking with value and gain/loss calculations
 
 Notifications need to be refreshed by opening the app periodically; the number of days scheduled adjusts to stay within iPhone notification limits. Before App Store submission, test all notification behavior on a physical iPhone.
 
@@ -33,6 +34,7 @@ Notifications need to be refreshed by opening the app periodically; the number o
 - `time.ts` and `types.ts` — shared helpers and TypeScript types
 - `ScannerScreen.tsx` and `stockService.ts` — scanner UI and optional Alpha Vantage market data
 - `SettingsScreen.tsx` and `alarmSettings.ts` — sound selection and persistent alarm preferences
+- `PortfolioScreen.tsx` and `portfolioService.ts` — locally stored holdings and optional quote refresh
 
 ## Optional market data
 

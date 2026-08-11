@@ -65,3 +65,20 @@ export async function loadStockMovers(): Promise<{ stocks: StockMover[]; source:
     ],
   };
 }
+
+export async function loadStockQuote(symbol: string) {
+  const apiKey = process.env.EXPO_PUBLIC_ALPHA_VANTAGE_KEY;
+  if (!apiKey) throw new Error('Add an Alpha Vantage API key before refreshing prices.');
+
+  const response = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${encodeURIComponent(symbol)}&apikey=${encodeURIComponent(apiKey)}`);
+  if (!response.ok) throw new Error(`Could not refresh ${symbol}.`);
+  const data = await response.json() as {
+    'Global Quote'?: { '05. price'?: string };
+    Information?: string;
+    Note?: string;
+  };
+  if (data.Information || data.Note) throw new Error(data.Information || data.Note);
+  const price = Number(data['Global Quote']?.['05. price']);
+  if (!Number.isFinite(price) || price <= 0) throw new Error(`No quote was returned for ${symbol}.`);
+  return price;
+}
